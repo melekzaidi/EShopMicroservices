@@ -14,7 +14,10 @@ public class CreateProductEndPoint :ICarterModule
             var result = await sender.Send(command);
             var response = result.Adapt<CreateProductResult>();
             return Results.Created($"/products/{response.Id}", response);
-        }).WithName("CreateProduct").Produces<CreateProductResponse>(StatusCodes.Status201Created).ProducesProblem(StatusCodes.Status400BadRequest).WithSummary("Create Product").WithDescription("Create Product");
+        }).WithName("CreateProduct")
+        .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+        .ProducesProblem(StatusCodes.Status400BadRequest).WithSummary("Create Product")
+        .WithDescription("Create Product");
     }
     }
 
