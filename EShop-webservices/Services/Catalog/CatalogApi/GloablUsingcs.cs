@@ -6,3 +6,6 @@ global using System.Windows.Input;
 global using Carter;
 global using Mapster;
 global using System;
+global using FluentValidation;
+global using BuildingBlocks.Behaviors;
+global using Catalog.API.Data;
