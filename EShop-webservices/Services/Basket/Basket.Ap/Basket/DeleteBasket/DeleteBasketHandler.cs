@@ -1,15 +1,27 @@
-﻿
+﻿using Basket.Api.Data;
 
 namespace Basket.API.Basket.DeleteBasket;
 
-public record GetBasketQuery(string UserName) : IQuery<GetBasketResult>;
-public record GetBasketResult(ShoppingCart Cart);
+public record DeleteBasketCommand(string UserName) : ICommand<DeleteBasketResult>;
+public record DeleteBasketResult(bool IsSuccess);
 
-public class GetBasketQueryHandler : IQueryHandler<GetBasketQuery, GetBasketResult>
+public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketCommand>
 {
-    public async Task<GetBasketResult> Handle(GetBasketQuery query, CancellationToken cancellation)
+    public DeleteBasketCommandValidator()
     {
-        // Replace "swn" with the appropriate UserName if needed
-        return new GetBasketResult(new ShoppingCart(query.UserName));
+        RuleFor(x => x.UserName)
+            .NotEmpty()
+            .WithMessage("UserName is required");
+    }
+}
+
+public class DeleteBasketCommandHandler(IbasketRepository repository) : ICommandHandler<DeleteBasketCommand, DeleteBasketResult>
+{
+    public async Task<DeleteBasketResult> Handle(DeleteBasketCommand command, CancellationToken cancellationToken)
+    {
+        repository.DeleteBasket(command.UserName, cancellationToken);
+
+
+        return new DeleteBasketResult(true);
     }
 }

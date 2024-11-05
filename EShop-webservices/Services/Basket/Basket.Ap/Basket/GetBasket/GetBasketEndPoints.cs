@@ -1,6 +1,5 @@
 ﻿
-using Mapster;
-using MediatR;
+
 
 namespace Basket.Ap.Basket.GetBasket;
 public record GetBasketResponse(ShoppingCart Cart);

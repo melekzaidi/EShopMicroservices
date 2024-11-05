@@ -1,6 +1,8 @@
 services:
   catalog:
     image: postgres
+  basketdb:
+    image: postgres
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
