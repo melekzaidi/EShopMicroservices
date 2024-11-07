@@ -15,7 +15,7 @@ public class StoreBasketCommandeHandler:AbstractValidator<StockBasketCommand>
     }
 
 }
-public class StockBasketCommandHandler (IbasketRepository repository): ICommandHandler<StockBasketCommand, StoreBasketResult>
+public class StockBasketCommandHandler (IBasketRepository repository): ICommandHandler<StockBasketCommand, StoreBasketResult>
 {
     public async Task<StoreBasketResult> Handle(StockBasketCommand command, CancellationToken cancellationToken)
     {
