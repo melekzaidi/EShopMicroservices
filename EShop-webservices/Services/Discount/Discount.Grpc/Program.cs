@@ -1,27 +1,23 @@
+using Discount.Grpc.Data;
 using Discount.Grpc.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenLocalhost(5052, o =>
-    {
-        o.Protocols = HttpProtocols.Http2; // HTTP/2 without TLS
-    });
-});
-if (builder.Environment.IsDevelopment())
-{
+builder.Services.AddDbContext< DiscountContext>(opts=>opts.UseSqlite(builder.Configuration.GetConnectionString("Database")));
+
+
     builder.Services.AddGrpcReflection();
-}
+
 
 var app = builder.Build();
-if (app.Environment.IsDevelopment())
-{
+
     app.MapGrpcReflectionService();
-}
+
+app.UseMigration();
 // Configure the HTTP request pipeline.
 app.MapGrpcService<DiscountServices>();
 
