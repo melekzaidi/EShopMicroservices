@@ -5,9 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Ordering.Domain.Abstraction;
+public interface IAggregate<T> : IAggregate, IEntity<T>
+{
 
+}
 public interface IAggregate :IEntity
 {
     IReadOnlyList<IDomainEvent> domainEvents { get; }
+   
     IDomainEvent[] ClearDomainEvent();
 }
